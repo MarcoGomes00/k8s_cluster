@@ -1,0 +1,43 @@
+# Python
+*.pyc
+__pycache__
+venv*/
+.ropeproject/
+
+# Vagrant
+.vagrant
+vagrant_overrides.yaml
+
+# IDE
+.idea/
+.vscode/
+
+# Binary files
+## This is not meant to be a comprehensive list; just ignoring common cases.
+## This repo is not the place to host these types of files; please host them
+## in an appropriate place (like an artifact repository) instead.
+*.7z
+*.class
+*.deb
+*.dll
+*.dmg
+*.exe
+*.exe
+*.gz
+*.iso
+*.jar
+*.mmdb
+*.msi
+*.o
+*.rar
+*.rpm
+*.so
+*.tar
+*.tgz
+*.zip
+
+# backups
+*.bak
+*.bk
+*_old
+*.old
