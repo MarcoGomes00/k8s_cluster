@@ -46,7 +46,7 @@ Vagrant.configure("2") do |config|
     master.vm.network 'private_network', ip: NETWORK + "1#{node}", netmask: NETMASK
     master.vm.provision :hosts, :sync_hosts => true
     master.vm.provision :hosts, :add_localhost_hostnames => false
-    master.vm.provision "shell", path: "install_kubeadm.sh"
+    master.vm.provision "shell", path: "install_kubeadm.sh", args: ["k8smaster#{node}"]
     master.vm.provision "shell", path: "kubeadm_init.sh", privileged: false
     end
   end

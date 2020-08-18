@@ -62,7 +62,7 @@ tee /root/kubeadm-config.yaml<<EOF
 apiVersion: kubeadm.k8s.io/v1beta2
 kind: ClusterConfiguration
 kubernetesVersion: 1.18.1               
-controlPlaneEndpoint: "k8smaster:6443"  
+controlPlaneEndpoint: "$1:6443"  
 networking:
   podSubnet: 192.168.0.0/16
 EOF
