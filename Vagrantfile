@@ -34,10 +34,10 @@ WORKER_EXPOSE_PORT = conf['WORKER_EXPOSE_PORT'] || false
 
 Vagrant.configure("2") do |config|
   (1..NUMBER_MASTERS).each do |node|
-    config.vm.define :"k8s_master-#{node}" do |master|
+    config.vm.define :"k8smaster-#{node}" do |master|
       master.vm.box = DISTRO
       master.vm.provider :virtualbox do |vbox|
-        vbox.name = "k8s_master-#{node}"
+        vbox.name = "k8smaster-#{node}"
         vbox.memory = MEM_MASTER
         vbox.cpus = CPU_MASTER
         vbox.gui = GUI
@@ -47,14 +47,15 @@ Vagrant.configure("2") do |config|
     master.vm.provision :hosts, :sync_hosts => true
     master.vm.provision :hosts, :add_localhost_hostnames => false
     master.vm.provision "shell", path: "install_kubeadm.sh"
+    master.vm.provision "shell", path: "kubeadm_init.sh", privileged: false
     end
   end
 
   (1..NUMBER_WORKERS).each do |node|
-    config.vm.define :"k8s_worker-#{node}" do |worker|
+    config.vm.define :"k8sworker-#{node}" do |worker|
       worker.vm.box = DISTRO
       worker.vm.provider :virtualbox do |vbox|
-        vbox.name = "k8s_worker-#{node}"
+        vbox.name = "k8sworker-#{node}"
         vbox.memory = MEM_WORKER
         vbox.cpus = CPU_WORKER
         vbox.gui = GUI

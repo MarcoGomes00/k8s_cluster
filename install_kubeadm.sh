@@ -22,6 +22,18 @@ sed -i 's/^SELINUX=.*/SELINUX=permissive/g' /etc/selinux/config
 sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
 swapoff -a
 
+#Configure sysctl.
+sudo modprobe overlay
+sudo modprobe br_netfilter
+
+sudo tee /etc/sysctl.d/kubernetes.conf<<EOF
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+net.ipv4.ip_forward = 1
+EOF
+
+sudo sysctl --system
+
 yum -y install epel-release vim git curl wget kubelet kubeadm kubectl --disableexcludes=kubernetes
 
 #TODO
@@ -43,3 +55,16 @@ sudo systemctl enable docker
 
 systemctl enable --now kubelet
 systemctl start kubelet
+
+wget https://docs.projectcalico.org/manifests/calico.yaml -P /root/
+
+tee /root/kubeadm-config.yaml<<EOF
+apiVersion: kubeadm.k8s.io/v1beta2
+kind: ClusterConfiguration
+kubernetesVersion: 1.18.1               
+controlPlaneEndpoint: "k8smaster:6443"  
+networking:
+  podSubnet: 192.168.0.0/16
+EOF
+
+kubeadm init --config=/root/kubeadm-config.yaml --upload-certs
