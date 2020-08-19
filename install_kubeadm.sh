@@ -55,16 +55,3 @@ sudo systemctl enable docker
 
 systemctl enable --now kubelet
 systemctl start kubelet
-
-wget https://docs.projectcalico.org/manifests/calico.yaml -P /root/
-
-tee /root/kubeadm-config.yaml<<EOF
-apiVersion: kubeadm.k8s.io/v1beta2
-kind: ClusterConfiguration
-kubernetesVersion: 1.18.1               
-controlPlaneEndpoint: "$1:6443"  
-networking:
-  podSubnet: 192.168.0.0/16
-EOF
-
-kubeadm init --config=/root/kubeadm-config.yaml --upload-certs
