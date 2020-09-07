@@ -24,7 +24,7 @@ CPU_MASTER         = conf['CPU_MASTER'] || 2
 CPU_WORKER         = conf['CPU_WORKER'] || 2
 DISTRO             = conf['DISTRO'] || "centos/7"
 GUI                = conf['GUI'] || false
-NETWORK            = conf['NETWORK'] || "10.0.0."
+NETWORK            = conf['NETWORK'] || "172.0.0."
 NETMASK            = conf['NETMASK'] || "255.255.255.0"
 NUMBER_MASTERS     = conf['NUMBER_MASTERS'] || 1
 NUMBER_WORKERS     = conf['NUMBER_WORKERS'] || 1
@@ -62,10 +62,11 @@ Vagrant.configure("2") do |config|
         vbox.gui = GUI
       end
     worker.vm.hostname = "k8sworker#{node}"
-    worker.vm.network 'private_network', ip: NETWORK + "1#{node}", netmask: NETMASK
+    worker.vm.network 'private_network', ip: NETWORK + "2#{node}", netmask: NETMASK
     worker.vm.provision :hosts, :sync_hosts => true
     worker.vm.provision :hosts, :add_localhost_hostnames => false
     worker.vm.provision "shell", path: "install_kubeadm.sh"
+    worker.vm.synced_folder ".", "/vagrant", type: "virtualbox"
     end
   end
 end

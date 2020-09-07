@@ -3,7 +3,7 @@ sudo wget https://docs.projectcalico.org/manifests/calico.yaml -P /root/
 sudo tee /root/kubeadm-config.yaml<<EOF
 apiVersion: kubeadm.k8s.io/v1beta2
 kind: ClusterConfiguration
-kubernetesVersion: 1.18.1               
+kubernetesVersion: 1.19.0               
 controlPlaneEndpoint: "$1:6443"  
 networking:
   podSubnet: 192.168.0.0/16

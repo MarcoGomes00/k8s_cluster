@@ -1,1 +1,1 @@
-kubeadm join --token a8qzmm.rsiyxqfa8sgnylvb k8smaster1:6443 --discovery-token-ca-cert-hash sha256:2efea7c7b7d2ea887598bada1bd898cfbb6b82141d383d9438d38a2503866ecb
+kubeadm join --token  k8smaster1:6443 --discovery-token-ca-cert-hash sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
